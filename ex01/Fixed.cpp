@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 13:57:32 by lgirault          #+#    #+#             */
-/*   Updated: 2023/07/20 18:27:47 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/07/20 19:59:43 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,39 +20,44 @@ Fixed::Fixed() : _rawBits(0)
 	return;
 }
 
-Fixed::Fixed(Fixed const& substitue)
+Fixed::Fixed(Fixed const& substitue) : _rawBits(0)
 {
 	std::cout << "Copie constructor called" << std::endl;
 	_rawBits = substitue.getRawBits();
 	return ;
 }
 
-Fixed::Fixed(int const toFixedPoint)
+Fixed::Fixed(int const toFixedPoint) : _rawBits(0)
 {
 	std::cout << "Int constructor called" << std::endl;
 	_rawBits = toFixedPoint << _nBitFrac;
 }
 
-Fixed::Fixed(float const toFixedPoint)
+Fixed::Fixed(float const toFixedPoint) : _rawBits(0)
 {
 	std::cout << "Float constructor called" << std::endl;
 	std::stringstream	stream;
 	std::string		str_fracPart;
 	int			int_fracPart = 0;
 
-	if (roundf(toFixedPoint) < toFixedPoint)
-		stream << std::fixed << (toFixedPoint - roundf(toFixedPoint));
-	else
-		stream << std::fixed << (toFixedPoint - (roundf(toFixedPoint) - 1));
+	// if (roundf(toFixedPoint) < toFixedPoint)
+	// 	stream << std::fixed << (toFixedPoint - roundf(toFixedPoint));
+	// else
+	// 	stream << std::fixed << (toFixedPoint - (roundf(toFixedPoint) - 1));
+	stream << std::fixed << std::setprecision(3) << (toFixedPoint - std::floor(toFixedPoint));
 	str_fracPart = stream.str();
 	str_fracPart.erase(0, 2);
 	int_fracPart = atoi(str_fracPart.c_str());
+	if (int_fracPart > 255)
+		std::cout << std::fixed << std::setprecision(2);
+	else
+		std::cout << std::fixed << std::setprecision(3);
 	while (int_fracPart > 255)
 		int_fracPart /= 10;
 	if (roundf(toFixedPoint) < toFixedPoint)
-		_rawBits = (int)(roundf(toFixedPoint)) << _nBitFrac;
+		_rawBits = (int)(roundf(toFixedPoint)) << (_nBitFrac);
 	else
-		_rawBits = (int)(roundf(toFixedPoint) - 1) << _nBitFrac;
+		_rawBits = (int)(roundf(toFixedPoint) - 1) << (_nBitFrac);
 	_rawBits = _rawBits | int_fracPart;
 }
 
@@ -92,8 +97,7 @@ float	Fixed::toFloat(void) const
 	float	toFloat;
 	
 	int_entPart = _rawBits >> _nBitFrac;
-	int_fracPart = _rawBits << 23;
-	int_fracPart = int_fracPart >> 23;
+	int_fracPart = _rawBits & 255;
 	stream << std::fixed << int_entPart;
 	str_entPart = stream.str();
 	stream1 << std::fixed << int_fracPart;
@@ -108,3 +112,9 @@ int	Fixed::toInt(void) const
 {
 	return (_rawBits >> _nBitFrac);
 }
+
+// std::ostream&	operator<<(std::ostream& flux, Fixed const& fixed)
+// {
+// 	flux << fixed.toFloat();
+// 	return (flux);
+// }

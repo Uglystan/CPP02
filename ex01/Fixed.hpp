@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 13:51:44 by lgirault          #+#    #+#             */
-/*   Updated: 2023/07/20 17:06:41 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/07/20 19:31:43 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <iostream>
 #include <cmath>
 #include <sstream>
+#include <iomanip>
 
 class	Fixed
 {
@@ -35,5 +36,7 @@ class	Fixed
 		float	toFloat(void) const;
 		int	toInt(void) const;
 };
+
+// std::ostream&	operator<<(std::ostream& flux, Fixed const& fixed);
 
 #endif
