@@ -6,7 +6,7 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 13:57:32 by lgirault          #+#    #+#             */
-/*   Updated: 2023/07/21 10:10:32 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/07/21 16:54:45 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,114 @@ std::ostream&	operator<<(std::ostream& flux, Fixed const& fixed)
 {
 	flux << fixed.toFloat();
 	return (flux);
+}
+
+/*---------------------------------EX02-------------------------------------*/
+
+bool	Fixed::operator>(Fixed const& b) const
+{
+	return (this->_rawBits > b._rawBits);
+}
+
+bool	Fixed::operator<(Fixed const& b) const
+{
+	return (this->_rawBits < b._rawBits);
+}
+
+bool	Fixed::operator>=(Fixed const& b) const
+{
+	return (this->_rawBits >= b._rawBits);
+}
+
+bool	Fixed::operator<=(Fixed const& b) const
+{
+	return (this->_rawBits <= b._rawBits);
+}
+
+bool	Fixed::operator==(Fixed const& b) const
+{
+	return (this->_rawBits == b._rawBits);
+}
+
+bool	Fixed::operator!=(Fixed const& b) const
+{
+	return (this->_rawBits != b._rawBits);
+}
+
+Fixed	Fixed::operator+(Fixed const& b) const
+{
+	Fixed	result;
+	result._rawBits = this->_rawBits + b._rawBits;
+	return (result);
+}
+
+Fixed	Fixed::operator-(Fixed const& b) const
+{
+	Fixed	result;
+	result._rawBits = this->_rawBits - b._rawBits;
+	return (result);
+}
+
+Fixed	Fixed::operator*(Fixed const& b) const
+{
+	return (this->toFloat() * b.toFloat());
+}
+
+Fixed	Fixed::operator/(Fixed const& b) const
+{
+	if (this->_rawBits != 0 && b._rawBits != 0)
+		return (this->toFloat() / b.toFloat());
+	else
+	{
+		std::cout << "Can't divide by 0" << std::endl;
+		return (*this);
+	}
+}
+
+Fixed&	Fixed::operator++(void)//prefixe
+{
+	_rawBits++;
+	return (*this);
+}
+
+Fixed const	Fixed::operator++(int)//postfixe
+{
+	Fixed copie(*this);
+	this->_rawBits++;
+	return (copie);
+}
+
+Fixed& Fixed::operator--(void)
+{
+	this->_rawBits--;
+	return (*this);
+}
+
+Fixed const	Fixed::operator--(int)
+{
+	Fixed	copie(this->_rawBits);
+	copie._rawBits--;
+	return (copie);
+}
+
+Fixed&	Fixed::min(Fixed& a, Fixed& b)
+{
+	return ((a < b) ? a : b);
+}
+
+Fixed const&	Fixed::min(Fixed const& a, Fixed const& b)
+{
+	return ((a < b) ? a : b);
+}
+
+Fixed&	Fixed::max(Fixed& a, Fixed& b)
+{
+	return ((a < b) ? b : a);
+}
+
+Fixed const&	Fixed::max(Fixed const& a, Fixed const& b)
+{
+	return ((a < b) ? b : a);
 }
 
 // float	Fixed::toFloat(void) const

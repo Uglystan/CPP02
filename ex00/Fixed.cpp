@@ -6,13 +6,13 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 13:57:32 by lgirault          #+#    #+#             */
-/*   Updated: 2023/07/20 14:42:39 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/07/21 10:10:45 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Fixed.hpp"
 
-//static int const _nBitFrac = 8;
+static int const _nBitFrac = 8;
 
 Fixed::Fixed() : _rawBits(0)
 {

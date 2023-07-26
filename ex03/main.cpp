@@ -6,30 +6,23 @@
 /*   By: lgirault <lgirault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 14:28:56 by lgirault          #+#    #+#             */
-/*   Updated: 2023/07/21 10:02:43 by lgirault         ###   ########.fr       */
+/*   Updated: 2023/07/24 09:37:45 by lgirault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Fixed.hpp"
+#include "Point.hpp"
 
-int	main( void )
+int main( void ) 
 {
-	Fixed a;
-	Fixed const b( 10 );
-	Fixed const c( 42.42f );
-	Fixed const d( b );
+	Point a(-1, 1);
+	Point b(2, 2);
+	Point c(-4, 6);
+	Point point(-2, 1.5);
 
-	a = Fixed( 1234.4321f );
-
-	std::cout << "a is " << a << std::endl;
-	std::cout << "b is " << b << std::endl;
-	std::cout << "c is " << c << std::endl;
-	std::cout << "d is " << d << std::endl;
-
-	std::cout << "a is " << a.toInt() << " as integer" << std::endl;
-	std::cout << "b is " << b.toInt() << " as integer" << std::endl;
-	std::cout << "c is " << c.toInt() << " as integer" << std::endl;
-	std::cout << "d is " << d.toInt() << " as integer" << std::endl;
+	if (a.bsp(a, b, c, point) == true)
+		std::cout << "Dedans" << std::endl;
+	else
+		std::cout << "Dehors" << std::endl;
 
 	return 0;
 }
